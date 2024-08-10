@@ -381,7 +381,7 @@ _Bool OneNet_DevLink(void)
 *	说明：			当有新设备接入时更改下面参数
 ************************************************************
 */
-extern uint8_t temp,humi,Status,RespiratoryRate,heartHate;
+extern uint8_t temp,humi,Status,RespiratoryRate,heartHate,SaO2;
 unsigned char OneNet_FillBuf(char *buf)
 {
 	
@@ -409,6 +409,10 @@ unsigned char OneNet_FillBuf(char *buf)
 	
 	memset(text, 0, sizeof(text));
 	sprintf(text, "\"heartHate\":{\"value\":%d},", heartHate);
+	strcat(buf, text);
+	
+	memset(text, 0, sizeof(text));
+	sprintf(text, "\"SaO2\":{\"value\":%d},", SaO2);
 	strcat(buf, text);
 	
 	memset(text, 0, sizeof(text));

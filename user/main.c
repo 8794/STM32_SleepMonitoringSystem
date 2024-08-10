@@ -34,7 +34,13 @@
 #include "led.h"
 #include "key.h"
 #include "dht11.h"
-#include "OLED.h"
+//#include "OLED.h"
+
+//血氧监测驱动文件
+#include "max30102.h"
+#include "algorithm.h"
+#include "myiic.h"
+
 //C库
 #include <string.h>
 
@@ -68,6 +74,8 @@ void Hardware_Init(void)
 	
 	Usart2_Init(115200);					//串口2，驱动ESP8266用
 	
+	max30102_init();					//血氧监测模块初始化
+	
 	Key_Init();										//按键初始化
 	
 	Led_Init();										//LED初始化
@@ -79,8 +87,8 @@ void Hardware_Init(void)
 //	}
 	
 	UsartPrintf(USART_DEBUG, " Hardware init OK\r\n");
-	
-	OLED_Init();
+
+//	OLED_Init();
 	
 }
 
@@ -101,6 +109,11 @@ void Hardware_Init(void)
 
 //数据：温度、湿度、状态、   呼吸率、        心率
 uint8_t temp,humi,Status,RespiratoryRate,heartHate;
+int32_t SaO2;		//血氧
+//下面是血氧监测函数中的其他参数
+int8_t ch_spo2_valid;   // indicator to show if the SP02 calculation is valid
+int32_t n_heart_rate;   // 心率（由于睡眠带中已经可以监测，所以未使用此模块中的该数据）
+int8_t ch_hr_valid;    // indicator to show if the heart rate calculation is valid
 
 
 int main(void)
@@ -126,11 +139,11 @@ int main(void)
 	
 	OneNET_Subscribe();//订阅消息，用于数据上报，即通过软件发送数据给云端来控制硬件
 
-	OLED_ShowString(1, 1, "Status:");
-	OLED_ShowString(2, 1, "Rrate:");
-	OLED_ShowString(3, 1, "Hhate:");
-	OLED_ShowString(4, 1, "temp:");
-	OLED_ShowString(4, 9, "humi:");
+//	OLED_ShowString(1, 1, "Status:");
+//	OLED_ShowString(2, 1, "Rrate:");
+//	OLED_ShowString(3, 1, "Hhate:");
+//	OLED_ShowString(4, 1, "temp:");
+//	OLED_ShowString(4, 9, "humi:");
 	while(1)
 	{
 		
@@ -138,8 +151,14 @@ int main(void)
 		{
 			DHT11_Read_Data(&temp,&humi);//获取温湿度数据
 			UsartPrintf(USART_DEBUG, "temp=%d humi=%d \r\n",temp,humi);
-			OLED_ShowNum(4,6,temp,2);
-			OLED_ShowNum(4,15,humi,2);
+			
+			//获取并解析血氧数据
+			readAndProcessFIFOData(aun_red_buffer, aun_ir_buffer);  
+      maxim_heart_rate_and_oxygen_saturation(aun_ir_buffer,  aun_red_buffer, &SaO2, &ch_spo2_valid, &n_heart_rate, &ch_hr_valid);
+			UsartPrintf(USART_DEBUG, "SaO2===%d \r\n",SaO2);
+			
+//			OLED_ShowNum(4,6,temp,2);
+//			OLED_ShowNum(4,15,humi,2);
 			if (Bed_GetRxFlag() == 1)	//判断是否有睡眠带数据传来
 			{
 				UsartPrintf(USART_DEBUG, "Status\r\n");
@@ -150,9 +169,9 @@ int main(void)
 					//睡眠带数据解析
 				Bed_Data(&Status,&heartHate,&RespiratoryRate);
 				UsartPrintf(USART_DEBUG, "Status=%d heartHate=%d  RespiratoryRate=%d\r\n",Status,heartHate,RespiratoryRate);
-				OLED_ShowNum(1,8,Status,2);
-				OLED_ShowNum(2,8,heartHate,2);
-				OLED_ShowNum(3,8,RespiratoryRate,2);
+//				OLED_ShowNum(1,8,Status,2);
+//				OLED_ShowNum(2,8,heartHate,2);
+//				OLED_ShowNum(3,8,RespiratoryRate,2);
 
 			}
 
