@@ -10,6 +10,9 @@
 - <img src="https://github.com/user-attachments/assets/2479ae6b-a4d2-4b85-ba8b-2704790b82a6" width="150">
 **ESP8266开发板**
 
+- <img src="https://img-blog.csdnimg.cn/direct/6b52164ad50949e59f7658561efe03c2.png" width="150">
+**MAX30102血氧模块**
+
 - <img src="https://github.com/user-attachments/assets/1d2905dd-7c60-4b7e-b535-8332a6830f02" width="150">
 **睡眠监测带**
 
