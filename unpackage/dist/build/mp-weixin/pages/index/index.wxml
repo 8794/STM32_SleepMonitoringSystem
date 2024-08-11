@@ -1,0 +1,25 @@
+<view class="wrap">
+  <view class="dev-interface">
+    <view class="dev-card">
+      <view>
+        <view class="dev-txt">湿度</view>
+        <image class="dev-logo" src="../../static/logo.png" mode></image>
+      </view>
+      <view class="dev-data">{{humi+"%"}}</view>
+    </view>
+    <view class="dev-card">
+      <view>
+        <view class="dev-txt">温度</view>
+        <image class="dev-logo" src="../../static/logo.png" mode></image>
+      </view>
+      <view class="dev-data">{{temp+"℃"}}</view>
+    </view>
+    <view class="dev-card">
+      <view>
+        <view class="dev-txt">灯</view>
+        <image class="dev-logo" src="../../static/logo.png" mode></image>
+      </view>
+      <switch checked="{{LED}}" color="#007aff" data-event-opts="{{[['change',[['onLedSeitch',['$event']]]]]}}" bindchange="__e"></switch>
+    </view>
+  </view>
+</view>

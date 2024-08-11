@@ -1,0 +1,38 @@
+.wrap {
+  padding: 32rpx
+}
+
+.dev-interface {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between
+}
+
+.dev-txt {
+  font-size: 20rpx;
+  color: #6d6d6d;
+  text-align: center
+}
+
+.dev-data {
+  font-size: 50rpx;
+  color: #6d6d6d;
+  text-align: center
+}
+
+.dev-card {
+  height: 150rpx;
+  width: 300rpx;
+  border-radius: 30rpx;
+  box-shadow: 0 0 15rpx #ccc;
+  margin-top: 30rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center
+}
+
+.dev-logo {
+  height: 70rpx;
+  width: 70rpx;
+  margin-top: 10rpx
+}

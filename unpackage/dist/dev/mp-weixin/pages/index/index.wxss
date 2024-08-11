@@ -1,0 +1,36 @@
+
+.wrap{
+	padding: 32rpx;		/*内边距 */
+}
+.dev-interface {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.dev-txt{
+	font-size: 20rpx;		/*字体大小 */
+	color:#6d6d6d;			/*字体颜色 */
+	text-align: center;
+}
+.dev-data{
+	font-size: 50rpx;		/*字体大小 */
+	color:#6d6d6d;			/*字体颜色 */
+	text-align: center;
+}
+.dev-card {
+	height: 150rpx;
+	width: 300rpx;
+	border-radius: 30rpx;			/*圆角 */
+	box-shadow: 0 0 15rpx #ccc;		/*阴影 */
+	margin-top:30rpx;				/*上边距 */
+	display: flex;
+	justify-content: space-around;
+	align-items: center;			/*居中 */
+}
+.dev-logo {
+	height: 70rpx;
+	width: 70rpx;
+	margin-top: 10rpx;			/*上边距 */
+}
+
+
